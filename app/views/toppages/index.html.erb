@@ -1,0 +1,39 @@
+<div class="center jumbotron">
+  <div class="text-center">
+    <h1>チェックル</h1>
+  </div>
+  <div class="text-center">
+    <h3>
+      チェックルは入居募集中の空室情報が各ポータルサイトで掲載されているかを
+    <BR>
+      自動的にチェックするサービスです。
+    </h3>
+    
+  </div>
+</div>
+<div>
+  <h3>
+                          まずは30秒で簡単検索！あなたの物件情報を選んでください。
+  </h3>
+    <p>
+    <input type="text" name="address_todofuken" placeholder="都道府県">
+    <input type="text" name="address_shikugun" placeholder="市区郡">
+    <input type="text" name="address_chomei" placeholder="町名">
+    <input type="text" name="type" placeholder="マンションorアパートor戸建">
+    <input type="text" name="rent_price" placeholder="家賃（管理費・共益費は除く）">
+    <input type="text" name="size" placeholder="広さ">
+    <input type="text" name="age" placeholder="築年数">
+    <BR><BR>
+    <button class="btn btn-primary" type="submit">お部屋情報を入れてチェックル！</button>
+    <%= link_to "submit", post_checkr_path, method: :post %>
+    
+</div>
+
+<div>
+  <p>以下、スクレイピング  </p>
+
+
+
+
+
+</div>
