@@ -30,22 +30,21 @@ class CheckrsController < ApplicationController
 
   select('賃料が安い順', :from => 'sort1')
   
-  # if params[:data][:rent_price].to_f >= 10
-  #   qwery_price = '10万円以上'
-  #   elsif params[:data][:rent_price].to_f >= 5
-  #         qwery_price = '5万円以上'
-  #       else
-  #         qwery_price = '下限なし'
-  #   end
-  # puts qwery_price
-
+  if params[:data][:rent_price].to_f >= 4 &&  params[:data][:rent_price].to_f < 30
+    lower_price = "#{params[:data][:rent_price].to_f.floor}万円以上"
+    upper_price = "#{params[:data][:rent_price].to_f.floor+1}万円以下"
+    select(lower_price, :from => 'r1')
+    select(upper_price, :from => 'r2')
+  elsif params[:data][:rent_price].to_f < 4
+    upper_price = "4万円以下"
+    select(upper_price, :from => 'r2')
+  elsif params[:data][:rent_price].to_f >= 30  
+    lower_price = "30万円以上"
+    select(lower_price, :from => 'r1')
+  end
   
-  lower_price = "#{params[:data][:rent_price].to_f.floor}万円以上"
-  upper_price = "#{params[:data][:rent_price].to_f.floor+1}万円以下"
   puts lower_price
   puts upper_price
-  select(lower_price, :from => 'r1')
-  select(upper_price, :from => 'r2')
   
   if params[:data][:size].to_f >= 50
     qwery_size = '50平米以上'
