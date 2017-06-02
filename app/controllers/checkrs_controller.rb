@@ -2,6 +2,7 @@ class CheckrsController < ApplicationController
   require 'capybara'
   require 'capybara/dsl'
   require 'capybara/poltergeist'
+  require "date"
   
   include Capybara::DSL
   include CheckrsHelper
@@ -12,10 +13,19 @@ class CheckrsController < ApplicationController
   def create
 
   p "start********************************"
+  d = Date.today
+  print(d.year, "年", d.month, "月", d.day, "日")
+  
+
   p params[:data]
+  p params[:data][:todofuken]
+  p params[:data][:shikugun]
+  p params[:data][:chomei]
+
   p params[:data][:room_type]
   p params[:data][:rent_price]
   p params[:data][:size]
+  p params[:data][:comp_year]
   
   #訪問先アドレス
   
@@ -27,29 +37,28 @@ class CheckrsController < ApplicationController
   # アクセス
   visit('')
   
-  #TOP画面からの遷移
+  # #TOP画面からの遷移
   within(:xpath, '//*[@id="titlePrefSelectSec"]') do
-  p find_link '東京'
-  todohuken = find_link('東京')
-  click_link(todohuken, 'city-search-url')
-   p "1"
-  sleep 1
+  path = find_link(params[:data][:todofuken])[:"city-search-url"]
+  visit("http://myhome.nifty.com#{path}")
+  p "1"
+
   end
 
    within(:xpath, '//*[@id="citySearchContent"]') do
     p "1"
-  click_on '足立区'
-   p "2"
-  sleep 3
+  click_on params[:data][:shikugun].to_s
+     p "2"
+  sleep 1
    p "3"
   end
 
 
   within(:xpath, '//*[@id="townList"]') do
     p "1"
-  click_on '大谷田'
+  click_on  params[:data][:chomei].to_s
    p "2"
-  sleep 3
+  sleep 1
    p "3"
   end
 
@@ -87,11 +96,28 @@ class CheckrsController < ApplicationController
     else
           qwery_size = '指定なし'
   end
-    
+  
+  if params[:data][:comp_year].present?
+    if age_year > 20
+      qwery_age = 'こだわらない'
+      elsif age_year > 15
+            qwery_age = '20年以内'
+      elsif age_year > 10
+            qwery_age = '15年以内'
+      elsif age_year > 5
+            qwery_age  '10年以内'
+      elsif age_year >= 1
+            qwery_age = '5年以内'
+      elsif
+          qwery_age = 'こだわらない'
+    end
+   select(qwery_age, :from => 'r12')
+  end
+  
   puts qwery_size
   select(qwery_size, :from => 'r10')
-
-
+  puts qwery_age 
+ 
   sleep 3 
   
   #tableのtbodyを取得し、内部のtrを配列で取得
