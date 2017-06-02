@@ -19,17 +19,40 @@ class CheckrsController < ApplicationController
   
   #訪問先アドレス
   
-  site_config("http://myhome.nifty.com/rent/tokyo/adachiku/oyata")
-  # site_config("http://myhome.nifty.com/rent/")
+  site_config("http://myhome.nifty.com/rent/")
+  # 検証用（都道府県ページ以降）
+  # site_config("http://myhome.nifty.com/rent/tokyo/city/")  
   driver_setting
     
   # アクセス
   visit('')
   
-  # TOP画面からの遷移
-  # within(:xpath, '//*[@id="titlePrefSelectSec"]') do
-  # click('東京')
-  # end
+  #TOP画面からの遷移
+  within(:xpath, '//*[@id="titlePrefSelectSec"]') do
+  p find_link '東京'
+  todohuken = find_link('東京')
+  click_link(todohuken, 'city-search-url')
+   p "1"
+  sleep 1
+  end
+
+   within(:xpath, '//*[@id="citySearchContent"]') do
+    p "1"
+  click_on '足立区'
+   p "2"
+  sleep 3
+   p "3"
+  end
+
+
+  within(:xpath, '//*[@id="townList"]') do
+    p "1"
+  click_on '大谷田'
+   p "2"
+  sleep 3
+   p "3"
+  end
+
   
   #検索条件を下記で指定
   
@@ -77,17 +100,7 @@ class CheckrsController < ApplicationController
   contents.each_with_index do |content, n|
     if n % 3 == 1
       p content.text
-      #p content.find_all("a", class_="detaillink", href="/link")
-      #p content.all('a').each{|a| a[:href]}
-      #p content.find_link('td.ph') →これだとひとつ上のタグだから、＜A>タグ見つからない。
-      #p content.find_link(:xpath,'td/a')
-      # p content.find('td.ph').all('a')[:href]
-      #p content.find('td.ph').all('a')[:href]
       p content.find('td.ph a')[:href]
-      # find('div#drawer a')[:href]
-      
-      #p content.find('td.ph').find.attribute('href').value nilが見つかるらしい
-      #p content.find('td.ph').find('a').find.attribute('href')
       
       test = Test.new
       / / =~ content.find('td.address').text
@@ -102,14 +115,16 @@ class CheckrsController < ApplicationController
 
       #test.price = content.find('td.paying').text
 
-      /万円/ =~ content.find('td.paying').text
+      /万円/ =~ content.find('td.paying').text  
       test.fee = Regexp.last_match.post_match
-      /円/ =~ test.fee
-      test.fee = Regexp.last_match.pre_match  
+      # /円/ =~ test.fee                        #fee＝管理費なしの物件だとエラーでるので、あとで検討
+      # test.fee = Regexp.last_match.pre_match  
 
+      
       /万円/ =~ content.find('td.paying').text
       test.price = Regexp.last_match.pre_match
 
+      
       #test.reisiki = content.find('').text
 
       / / =~ content.find('td.floor').text
@@ -136,8 +151,7 @@ class CheckrsController < ApplicationController
         #test.brand = content.find('td.ph a')[:class]
         test = Test.last
         test.shop = content.find('td.company').text
-        # p content.find.all('td.company span')[1][:class]
-        p content.find('td.company span')[:class]
+        test.brand =  content.all('td.company span')[1][:class].split(" ")[1]
         test.save
         @contents << content.text
       end
@@ -145,7 +159,7 @@ class CheckrsController < ApplicationController
   
   end
   
-  render "checkrs/index"
+   render "checkrs/index"
   
   end
 end
