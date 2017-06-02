@@ -18,16 +18,22 @@ class CheckrsController < ApplicationController
   p params[:data][:size]
   
   #訪問先アドレス
+  
   site_config("http://myhome.nifty.com/rent/tokyo/adachiku/oyata")
+  # site_config("http://myhome.nifty.com/rent/")
   driver_setting
     
   # アクセス
   visit('')
   
-
+  # TOP画面からの遷移
+  # within(:xpath, '//*[@id="titlePrefSelectSec"]') do
+  # click('東京')
+  # end
   
   #検索条件を下記で指定
-
+  
+  
   select('賃料が安い順', :from => 'sort1')
   select('10件表示', :from => 'pnum')
   
@@ -59,7 +65,7 @@ class CheckrsController < ApplicationController
           qwery_size = '指定なし'
   end
     
-   puts qwery_size
+  puts qwery_size
   select(qwery_size, :from => 'r10')
 
 
@@ -76,7 +82,8 @@ class CheckrsController < ApplicationController
       #p content.find_link('td.ph') →これだとひとつ上のタグだから、＜A>タグ見つからない。
       #p content.find_link(:xpath,'td/a')
       # p content.find('td.ph').all('a')[:href]
-      p content.find('td.ph').all('a')
+      #p content.find('td.ph').all('a')[:href]
+      p content.find('td.ph a')[:href]
       # find('div#drawer a')[:href]
       
       #p content.find('td.ph').find.attribute('href').value nilが見つかるらしい
@@ -87,7 +94,7 @@ class CheckrsController < ApplicationController
       test.station = Regexp.last_match.pre_match
       / / =~ content.find('td.address').text
       test.address = Regexp.last_match.post_match
-      #test.link = content.find('td.ph').find_link
+      test.link = content.find('td.ph a')[:href]
       
       
       /分/ =~ content.find('td.minute').text
@@ -125,12 +132,15 @@ class CheckrsController < ApplicationController
       @contents << content.text
     elsif n % 3 == 0  && n != 0
       p content.text
-       if content.find('td.company').present?
-         test = Test.last
-         test.shop = content.find('td.company').text
-         test.save
+      if content.find('td.company').present?
+        #test.brand = content.find('td.ph a')[:class]
+        test = Test.last
+        test.shop = content.find('td.company').text
+        # p content.find.all('td.company span')[1][:class]
+        p content.find('td.company span')[:class]
+        test.save
         @contents << content.text
-       end
+      end
     end
   
   end
