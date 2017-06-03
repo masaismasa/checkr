@@ -7,10 +7,10 @@ class CreateQweries < ActiveRecord::Migration[5.0]
       t.string :type
       t.string :station
       t.integer :minute
-      t.float :price
+      t.decimal :price
       t.string :fee
       t.string :madori
-      t.float :size
+      t.decimal :size
       t.string :floor
       t.integer :comp_year
 

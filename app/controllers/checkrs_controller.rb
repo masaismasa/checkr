@@ -153,7 +153,7 @@ class CheckrsController < ApplicationController
 
       
       /万円/ =~ content.find('td.paying').text
-      room.price = Regexp.last_match.pre_match.to_f
+      room.price = Regexp.last_match.pre_match  #.to_f
 
       
       #room.reisiki = content.find('').text
@@ -202,8 +202,10 @@ class CheckrsController < ApplicationController
   
   
   @matches = []
-  @matches = Room.where(price: params[:data][:rent_price].to_f).all
-  puts @matches
+  @matches = Room.where(price: params[:data][:rent_price].to_f, size: params[:data][:size].to_f).all
+  
+  
+  p @matches
 
   # qwery.size = params[:data][:size]
   # qwery.comp_year = params[:data][:comp_year]
@@ -211,7 +213,8 @@ class CheckrsController < ApplicationController
    
    render "checkrs/index"
   
-
+  #room = Room.all.destroy_all
+  
   
   end
 end

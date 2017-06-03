@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20170603072522) do
     t.string   "type"
     t.string   "station"
     t.integer  "minute"
-    t.float    "price",      limit: 24
+    t.decimal   "price",      precision: 4  , scale: 2
     t.string   "fee"
     t.string   "madori"
-    t.float    "size",       limit: 24
+    t.decimal    "size",       precision: 4  , scale: 2
     t.string   "floor"
     t.integer  "comp_year"
     t.datetime "created_at",            null: false
@@ -38,11 +38,11 @@ ActiveRecord::Schema.define(version: 20170603072522) do
     t.string   "address"
     t.string   "link",     limit: 1000
     t.integer  "minute"
-    t.float    "price",      limit: 24
+    t.decimal   "price",      precision: 4  , scale: 2
     t.string   "fee"
     t.string   "reisiki"
     t.string   "madori"
-    t.float    "size",       limit: 24
+    t.decimal    "size",       precision: 4  , scale: 2
     t.string   "floor"
     t.integer  "age"
     t.string   "brand"

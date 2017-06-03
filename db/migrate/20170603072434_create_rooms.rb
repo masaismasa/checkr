@@ -10,11 +10,11 @@ class CreateRooms < ActiveRecord::Migration[5.0]
       t.string :address
       t.string :link
       t.integer :minute
-      t.float :price
+      t.decimal :price
       t.string :fee
       t.string :reisiki
       t.string :madori
-      t.float :size
+      t.decimal :size
       t.string :floor
       t.integer :age
       t.string :brand

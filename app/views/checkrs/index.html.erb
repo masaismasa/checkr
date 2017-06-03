@@ -65,8 +65,8 @@
   <!--<%= f.number_field:rent_price, step: 0.1,  :placeholder => '家賃（万円）※管理費・共益費は除く' %>-->
   <!--<%= f.number_field:size, step: 0.1,  :placeholder => '広さ（㎡）' %>-->
   <!--<%= f.number_field:comp_year, step: 1,  :placeholder => '築年' %>-->
-  <%= f.number_field:rent_price, step: 0.1,  :value => 5.9 %>
-  <%= f.number_field:size, step: 0.1,  :value => 22 %>
+  <%= f.number_field:rent_price, step: 0.01,  :value => 5.9 %>
+  <%= f.number_field:size, step: 0.01,  :value => 22.47 %>
   <%= f.number_field:comp_year, step: 1,  :value => 2015 %>
   
   <BR><BR>
@@ -82,14 +82,27 @@
     <% @contents.each do |content| %> 
      <%= content %><br>
      <% end %>
+     <br><br>
   <% end %>
 
   <% if @matches.present? %>
-
-    <% @matches.each do |matches| %> 
-     <%=  matches %><br>
+    <DIV>
+    <h3>
+      条件に当てはまる物件を発見しました！！
+    </h3>
+    <BR>
+    
+    <% @matches.each do |match| %> 
+     <%= match.brand %>
+     <%= match.shop %>
+     <%= match.address %>
+     <%= match.minute %>
+     <%= match.price %>
+     <%= match.fee %>
+     <%= match.madori %>
+     <%= match.size %>
      <% end %>
+    </DIV>
   <% end %>
-
 
 </div>
