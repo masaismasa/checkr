@@ -3,6 +3,8 @@ class CheckrsController < ApplicationController
   require 'capybara/dsl'
   require 'capybara/poltergeist'
   require "date"
+
+  
   
   include Capybara::DSL
   include CheckrsHelper
@@ -16,16 +18,16 @@ class CheckrsController < ApplicationController
   d = Date.today
   print(d.year, "年", d.month, "月", d.day, "日")
   
+  qwery = Qwery.new
+  qwery.todofuken =  params[:data][:todofuken]
+  qwery.shikugun = params[:data][:shikugun]
+  qwery.chomei = params[:data][:chomei]
+  qwery.type =  params[:data][:room_type]
+  qwery.price = params[:data][:rent_price]
+  qwery.size = params[:data][:size]
+  qwery.comp_year = params[:data][:comp_year]
 
-  p params[:data]
-  p params[:data][:todofuken]
-  p params[:data][:shikugun]
-  p params[:data][:chomei]
-
-  p params[:data][:room_type]
-  p params[:data][:rent_price]
-  p params[:data][:size]
-  p params[:data][:comp_year]
+  qwery.save
   
   #訪問先アドレス
   
@@ -98,6 +100,8 @@ class CheckrsController < ApplicationController
   end
   
   if params[:data][:comp_year].present?
+    age_year = d.year - params[:data][:comp_year].to_f
+    p age_year
     if age_year > 20
       qwery_age = 'こだわらない'
       elsif age_year > 15
@@ -128,64 +132,86 @@ class CheckrsController < ApplicationController
       p content.text
       p content.find('td.ph a')[:href]
       
-      test = Test.new
+      room = Room.new
       / / =~ content.find('td.address').text
-      test.station = Regexp.last_match.pre_match
+      room.station = Regexp.last_match.pre_match
       / / =~ content.find('td.address').text
-      test.address = Regexp.last_match.post_match
-      test.link = content.find('td.ph a')[:href]
+      room.address = Regexp.last_match.post_match
+      room.link = content.find('td.ph a')[:href]
       
       
       /分/ =~ content.find('td.minute').text
-      test.minute = Regexp.last_match.pre_match
+      room.minute = Regexp.last_match.pre_match.to_i
+      
+      #room.price = content.find('td.paying').text
 
-      #test.price = content.find('td.paying').text
-
-      /万円/ =~ content.find('td.paying').text  
-      test.fee = Regexp.last_match.post_match
-      # /円/ =~ test.fee                        #fee＝管理費なしの物件だとエラーでるので、あとで検討
-      # test.fee = Regexp.last_match.pre_match  
+      room.fee = content.find('td.paying').text.split(" ",2) [1] 
+      # /万円/ =~ content.find('td.paying').text  
+      # room.fee = Regexp.last_match.post_match
+      # /円/ =~ room.fee                        #fee＝管理費なしの物件だとエラーでるので、あとで検討
+      # room.fee = Regexp.last_match.pre_match  
 
       
       /万円/ =~ content.find('td.paying').text
-      test.price = Regexp.last_match.pre_match
+      room.price = Regexp.last_match.pre_match.to_f
 
       
-      #test.reisiki = content.find('').text
+      #room.reisiki = content.find('').text
 
       / / =~ content.find('td.floor').text
-      test.madori = Regexp.last_match.pre_match
+      room.madori = Regexp.last_match.pre_match
 
 
       / / =~ content.find('td.floor').text
-      test.size = Regexp.last_match.post_match
-      /m²/ =~ test.size
-      test.size = Regexp.last_match.pre_match
+      henkan = Regexp.last_match.post_match
+      /m²/ =~ henkan
+      room.size = Regexp.last_match.pre_match
 
       / / =~ content.find('td.buildDetail').text
-      test.floor =  Regexp.last_match.pre_match
+      room.floor =  Regexp.last_match.pre_match
 
       / / =~ content.find('td.buildDetail').text
-      test.age =  Regexp.last_match.post_match
+      room.age =  Regexp.last_match.post_match
       
-      test.save
+      room.save
       
       @contents << content.text
     elsif n % 3 == 0  && n != 0
       p content.text
       if content.find('td.company').present?
-        #test.brand = content.find('td.ph a')[:class]
-        test = Test.last
-        test.shop = content.find('td.company').text
-        test.brand =  content.all('td.company span')[1][:class].split(" ")[1]
-        test.save
+        #room.brand = content.find('td.ph a')[:class]
+        room = Room.last
+        room.shop = content.find('td.company').text
+        room.brand =  content.all('td.company span')[1][:class].split(" ")[1]
+        room.save
         @contents << content.text
       end
     end
   
   end
   
+  # p qwery
+  
+   # redirect_to :back
+   # redirect_to root_path
+   
+   #ここに、検索条件とDB内容を比較して、マッチするものを抽出するコード
+    #paramの家賃、広さ、築年数と、DBのRoom.idを一件ずつ比較し、適合する内容を変数に入れる。
+    # @matches　みたいな変数にする？
+   #抽出した物件データを、Viewerに渡すための変数設定とコード
+  
+  
+  @matches = []
+  @matches = Room.where(price: params[:data][:rent_price].to_f).all
+  puts @matches
+
+  # qwery.size = params[:data][:size]
+  # qwery.comp_year = params[:data][:comp_year]
+
+   
    render "checkrs/index"
+  
+
   
   end
 end

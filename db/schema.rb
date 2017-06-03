@@ -10,12 +10,51 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170602025513) do
+ActiveRecord::Schema.define(version: 20170603072522) do
+
+  create_table "qweries", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "todofuken"
+    t.string   "shikugun"
+    t.string   "chomei"
+    t.string   "type"
+    t.string   "station"
+    t.integer  "minute"
+    t.float    "price",      limit: 24
+    t.string   "fee"
+    t.string   "madori"
+    t.float    "size",       limit: 24
+    t.string   "floor"
+    t.integer  "comp_year"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string   "todofuken"
+    t.string   "shikugun"
+    t.string   "chomei"
+    t.string   "type"
+    t.string   "station"
+    t.string   "address"
+    t.string   "link",     limit: 1000
+    t.integer  "minute"
+    t.float    "price",      limit: 24
+    t.string   "fee"
+    t.string   "reisiki"
+    t.string   "madori"
+    t.float    "size",       limit: 24
+    t.string   "floor"
+    t.integer  "age"
+    t.string   "brand"
+    t.string   "shop"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
 
   create_table "tests", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "station"
     t.string   "address"
-    t.string   "link"
+    t.string   "link",       limit: 1000
     t.string   "minute"
     t.string   "price"
     t.string   "fee"
@@ -26,8 +65,8 @@ ActiveRecord::Schema.define(version: 20170602025513) do
     t.string   "age"
     t.string   "brand"
     t.string   "shop"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
 end
