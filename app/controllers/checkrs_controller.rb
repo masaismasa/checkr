@@ -70,7 +70,7 @@ class CheckrsController < ApplicationController
   
   
   select('賃料が安い順', :from => 'sort1')
-  select('40件表示', :from => 'pnum')
+  select('60件表示', :from => 'pnum')
   
   if params[:data][:rent_price].to_f >= 4 &&  params[:data][:rent_price].to_f < 30
     lower_price = "#{params[:data][:rent_price].to_f.floor}万円以上"
@@ -127,12 +127,10 @@ class CheckrsController < ApplicationController
   
   #tableのtbodyを取得し、内部のtrを配列で取得
   contents = find('#searchResultList > tbody').all('tr')
-  @contents = []
+  
   contents.each_with_index do |content, n|
     if n % 3 == 1
-      p content.text
-      p content.find('td.ph a')[:href]
-      
+     
       room = Room.new
       / / =~ content.find('td.address').text
       room.station = Regexp.last_match.pre_match
@@ -175,17 +173,17 @@ class CheckrsController < ApplicationController
       room.age =  Regexp.last_match.post_match
       
       room.save
-      
-      @contents << content.text
+    
+
     elsif n % 3 == 0  && n != 0
       p content.text
       if content.find('td.company').present?
-        #room.brand = content.find('td.ph a')[:class]
         room = Room.last
-        room.shop = content.find('td.company').text
-        room.brand =  content.all('td.company span')[1][:class].split(" ")[1]
+        
+        room.shop = content.find('td.company').text.delete("配信元: ")
+      room.brand =  content.all('td.company span')[1][:class].split(" ")[1].gsub(/homesf|forrenf|mynavif|chintaf|jseef|athomef|adparkf|pitatf/, "jseef" => "いい部屋ネット", "athomef" => "at home", "adparkf" => "adpark", "pitatf" => "ピタットハウス", "homesf" => "HOMES", "forrenf" => "SUUMO", "mynavif" => "マイナビ賃貸", "chintaf" => "CHINTAI")
         room.save
-        @contents << content.text
+
       end
     end
   
@@ -196,11 +194,9 @@ class CheckrsController < ApplicationController
    # redirect_to :back
    # redirect_to root_path
    
-   #ここに、検索条件とDB内容を比較して、マッチするものを抽出するコード
-    #paramの家賃、広さ、築年数と、DBのRoom.idを一件ずつ比較し、適合する内容を変数に入れる。
-    # @matches　みたいな変数にする？
-   #抽出した物件データを、Viewerに渡すための変数設定とコード
-  
+
+  @rooms = []
+  @rooms = Room.all
   
   @matches = []
   @matches = Room.where(price: params[:data][:rent_price].to_f, size: params[:data][:size].to_f).all
