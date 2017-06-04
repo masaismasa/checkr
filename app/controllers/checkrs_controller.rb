@@ -15,6 +15,7 @@ class CheckrsController < ApplicationController
   def create
 
   p "start********************************"
+  room = Room.all.destroy_all
   d = Date.today
   print(d.year, "年", d.month, "月", d.day, "日")
   
@@ -41,7 +42,7 @@ class CheckrsController < ApplicationController
   
   # #TOP画面からの遷移
   within(:xpath, '//*[@id="titlePrefSelectSec"]') do
-  path = find_link(params[:data][:todofuken])[:"city-search-url"]
+  path = find_link(params[:data][:todofuken].chop)[:"city-search-url"]
   visit("http://myhome.nifty.com#{path}")
   p "1"
 
@@ -69,7 +70,7 @@ class CheckrsController < ApplicationController
   
   
   select('賃料が安い順', :from => 'sort1')
-  select('10件表示', :from => 'pnum')
+  select('40件表示', :from => 'pnum')
   
   if params[:data][:rent_price].to_f >= 4 &&  params[:data][:rent_price].to_f < 30
     lower_price = "#{params[:data][:rent_price].to_f.floor}万円以上"
@@ -213,7 +214,7 @@ class CheckrsController < ApplicationController
    
    render "checkrs/index"
   
-  #room = Room.all.destroy_all
+  
   
   
   end
