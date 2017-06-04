@@ -56,3 +56,6 @@ gem 'anemone'
 gem 'capybara'
 gem 'poltergeist'
 gem 'mechanize'
+group :production do
+  gem 'pg'
+end

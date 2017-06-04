@@ -48,7 +48,9 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
   database: checkr_production
   username: checkr
   password: <%= ENV['CHECKR_DATABASE_PASSWORD'] %>
