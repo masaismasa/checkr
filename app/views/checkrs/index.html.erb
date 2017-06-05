@@ -31,15 +31,15 @@
        </div>
        <div class="form-group">
              <label for="todofuken">都道府県</label><br> 
-                  <%= f.text_field(:todofuken, :class => 'form-control p-region',:size => "8", :required => 'true' ) %>
+                  <%= f.text_field(:todofuken, :class => 'form-control p-region',:size => "8", :required => 'true', :placeholder =>  "例:神奈川県" ) %>
        </div>
       <div class="form-group">
              <label for="shikugun">市区郡</label><br> 
-                  <%= f.text_field(:shikugun, :class => 'form-control p-locality',:size => "8", :required => 'true'  ) %>
+                  <%= f.text_field(:shikugun, :class => 'form-control p-locality',:size => "8", :required => 'true', :placeholder =>  "例:鎌倉市"  ) %>
        </div>
       <div class="form-group">
              <label for="chomei">町村名　※丁目番地不要</label><br> 
-                  <%= f.text_field(:chomei, :class => 'form-control p-street-address',:size => "16", :required => 'true'  ) %>
+                  <%= f.text_field(:chomei, :class => 'form-control p-street-address',:size => "16", :required => 'true', :placeholder =>  "例:材木座"  ) %>
                   &nbsp&nbsp&nbsp
        </div>
       <div class="form-group">
@@ -50,15 +50,15 @@
       </div>                   
       <div class="form-group">
              <label for="size">家賃（万円）</label><br>
-             <%= f.number_field:rent_price, step: 0.01,  :class => 'form-control', :placeholder =>  "例:8.7", :required => 'true', :style => "width:100px", :maxlength => 5  %>
+             <%= f.number_field:rent_price, step: 0.01,  :class => 'form-control', :placeholder =>  "例:10.8", :required => 'true', :style => "width:100px", :maxlength => 5  %>
        </div>
       <div class="form-group">
              <label for="size">広さ（㎡）</label><br>
-             <%= f.number_field:size, step: 0.01,  :class => 'form-control', :style => "width:100px", :maxlength => 5, :placeholder =>  "例:32.6", :required => 'true' %>
+             <%= f.number_field:size, step: 0.01,  :class => 'form-control', :style => "width:100px", :maxlength => 5, :placeholder =>  "例:36.2", :required => 'true' %>
        </div>
       <div class="form-group">
              <label for="comp_year">築年</label><br>
-             <%= f.number_field:comp_year, step: 1,  :class => 'form-control', :style => "width:100px", :maxlength => 4,  :placeholder =>  "例:2013", :required => 'true' %>
+             <%= f.number_field:comp_year, step: 1,  :class => 'form-control', :style => "width:100px", :maxlength => 4,  :placeholder =>  "例:2010", :required => 'true' %>
        </div>  
        <BR>
        <BR>
