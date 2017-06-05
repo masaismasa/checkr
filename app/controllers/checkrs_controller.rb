@@ -47,10 +47,10 @@ class CheckrsController < ApplicationController
   p "1"
 
   end
-
+  sleep 1
    within(:xpath, '//*[@id="citySearchContent"]') do
     p "1"
-  click_on params[:data][:shikugun].to_s
+  find_link(params[:data][:shikugun].to_s).trigger('click')
      p "2"
   sleep 1
    p "3"
@@ -59,7 +59,7 @@ class CheckrsController < ApplicationController
 
   within(:xpath, '//*[@id="townList"]') do
     p "1"
-  click_on  params[:data][:chomei].to_s
+  find_link(params[:data][:chomei].to_s).trigger('click')  
    p "2"
   sleep 1
    p "3"
