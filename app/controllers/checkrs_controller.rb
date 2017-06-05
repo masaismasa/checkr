@@ -199,7 +199,7 @@ class CheckrsController < ApplicationController
   @rooms = Room.all
   
   @matches = []
-  @matches = Room.where(price: params[:data][:rent_price].to_f, size: params[:data][:size].to_f).all
+  @matches = Room.where(price: params[:data][:rent_price].to_d, size: params[:data][:size].to_d).all
   # @matches = Room.all
   
   p @matches

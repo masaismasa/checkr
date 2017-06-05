@@ -88,6 +88,7 @@
         <th class="text-center">管理費等</th>
         <th class="text-center">間取り</th>
         <th class="text-center">広さ</th>
+        <th class="text-center">築年数</th>
         <th class="text-center">詳細ページ</th>
       </tr>
       
@@ -101,6 +102,7 @@
      <td class="text-right"><%= match.fee %></td>
      <td class="text-right"><%= match.madori %></td>
      <td class="text-right"><%= match.size %></td>
+　   <td class="text-right"><%= match.age %></td>
      <td class="text-right"><%= link_to '詳細', match.link, :target => '_blank' %></td>
      
      </TR>
@@ -124,6 +126,7 @@
         <th class="text-center">管理費等</th>
         <th class="text-center">間取り</th>
         <th class="text-center">広さ</th>
+        <th class="text-center">築年数</th>
         <th class="text-center">詳細ページ</th>
       </tr>
     <% @rooms.each do |room| %> 
@@ -136,7 +139,8 @@
      <td class="text-right"><%= room.fee %></td>
      <td class="text-right"><%= room.madori %></td>
      <td class="text-right"><%= room.size %></td>
-     <td class="text-right"><%= link_to '詳細', room.link, :target => '_blank' %></td>
+　   <td class="text-right"><%= room.age %></td>
+　   <td class="text-right"><%= link_to '詳細', room.link, :target => '_blank' %></td>
      
      </TR>
       <% end %>
