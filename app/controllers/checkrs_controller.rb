@@ -110,7 +110,7 @@ class CheckrsController < ApplicationController
       elsif age_year > 10
             qwery_age = '15年以内'
       elsif age_year > 5
-            qwery_age  '10年以内'
+            qwery_age = '10年以内'
       elsif age_year >= 1
             qwery_age = '5年以内'
       elsif
