@@ -155,10 +155,23 @@
   <% end %>
 
  <% if @rooms.present? %>
-　　<DIV>
+   <% if @matches.present? == false %>
+      　  <h3>
+            条件に該当する物件はありませんでした。
+        </h3>
+            (家賃や広さは小数点まで正確に記入してください）
+        
+   <% end %>
+   <DIV>
 　　  <h3>
       （参考）条件に近い物件リスト
-    </h3>
+      </h3>  
+       <%= @qwery.todofuken %> <%= @qwery.shikugun %> <%= @qwery.chomei  %>
+       <%= @qwery.price %>万円
+       <%= @qwery.size  %>㎡
+       <%= @qwery.comp_year %>年
+      
+    
     <table class="table table-striped table-bordered table-condensed" >
       <tr>
         <th class="text-center">掲載サイト</th>

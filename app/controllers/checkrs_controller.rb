@@ -30,6 +30,8 @@ class CheckrsController < ApplicationController
 
   qwery.save
   
+  @qwery = qwery
+  
   #訪問先アドレス
   
   site_config("http://myhome.nifty.com/rent/")
@@ -138,9 +140,14 @@ class CheckrsController < ApplicationController
       room.address = Regexp.last_match.post_match
       room.link = content.find('td.ph a')[:href]
       
-      
-      /分/ =~ content.find('td.minute').text
-      room.minute = Regexp.last_match.pre_match.to_i
+      if content.find('td.minute').text.split("分",2) [0].present?
+      room.minute = content.find('td.minute').text.split("分",2) [0] 
+      else
+      room.minute = "0"
+      end
+    
+      # /分/ =~ content.find('td.minute').text
+      # room.minute = Regexp.last_match.pre_match.to_i
       
       #room.price = content.find('td.paying').text
 
