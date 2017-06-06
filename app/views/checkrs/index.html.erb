@@ -77,18 +77,16 @@
 <div class="container">
   <% if @error.present? %>
    <DIV>
-     <% if @error.class == Capybara::ElementNotFound && @error.message.include?("Unable to find")  %>
+     <% if @error.class == Capybara::ElementNotFound && @error.message.include?("#searchResultList > tbody")  %>
      <h3>
-       <!--<%= @error.class %><BR>-->
-       <!--<%= @error.message %><BR>-->
-       住所が見つかりませんでした
+     </h3>
+       当てはまる物件も、類似物件もありませんでした
        <BR>
        (ブラウザの「戻る」ボタンで検索条件を確認してみてください）    
-     </h3>
      
-     <% elsif @error.class == Capybara::ElementNotFound && @error.message.include?("#searchResultList > tbody")  %>
+     <% elsif @error.class == Capybara::ElementNotFound && @error.message.include?("Unable to find")  %>
      <h3>
-       当てはまる物件も、類似物件もありませんでした
+        住所が見つかりませんでした
        <BR>
        (ブラウザの「戻る」ボタンで検索条件を確認してみてください）    
      </h3>
