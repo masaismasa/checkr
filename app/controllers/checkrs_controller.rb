@@ -210,8 +210,12 @@ class CheckrsController < ApplicationController
    
    render "checkrs/index"
   
-  
-  
-  
+  rescue => e
+  @error = e
+  p @error.class
+  p @error.message
+  render "checkrs/index"
+
+
   end
 end

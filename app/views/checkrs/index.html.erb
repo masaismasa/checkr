@@ -1,5 +1,8 @@
 <div class="center jumbotron">
   <div class="text-center">
+    <h3>
+      10秒ではじめる手軽な空室対策サービス
+    </h3>
     <h1>チェックル！(β)</h1>
   </div>
   <div class="text-center">
@@ -72,6 +75,48 @@
 </div>
 
 <div class="container">
+  <% if @error.present? %>
+   <DIV>
+     <% if @error.class == Capybara::ElementNotFound && @error.message.include?("Unable to find")  %>
+     <h3>
+       <!--<%= @error.class %><BR>-->
+       <!--<%= @error.message %><BR>-->
+       住所が見つかりませんでした
+       <BR>
+       (ブラウザの「戻る」ボタンで検索条件を確認してみてください）    
+     </h3>
+     
+     <% elsif @error.class == Capybara::ElementNotFound && @error.message.include?("#searchResultList > tbody")  %>
+     <h3>
+       当てはまる物件も、類似物件もありませんでした
+       <BR>
+       (ブラウザの「戻る」ボタンで検索条件を確認してみてください）    
+     </h3>
+     
+     <% elsif @error.class == Capybara::Ambiguous %>
+     <h3>
+       住所が複数見つかりました
+       <BR>
+       (ブラウザの「戻る」ボタンで検索条件を確認してみてください）    
+     </h3>
+     <% elsif @error.class == Capybara::Poltergeist::DeadClient %>
+     <h3>
+       検索に失敗しました。
+       <BR>
+       (ブラウザの「戻る」ボタンで戻ってから、もう一度チェックルしてみてください）    
+     </h3>
+     <% elsif %>
+     <h3>
+       <%= @error.class %><BR>
+       <%= @error.message %><BR>
+       なんらかのエラーが発生しました
+      <BR>
+       (ブラウザの「戻る」ボタンで検索条件を確認してみてください）    
+     </h3>
+     
+     <% end %>
+   </DIV>
+ <% end %>
 
   <% if @matches.present? %>
     <DIV>
