@@ -123,7 +123,7 @@ class CheckrsController < ApplicationController
   select(qwery_size, :from => 'r10')
   puts qwery_age 
  
-  sleep 3 
+  sleep 5 
   
   #tableのtbodyを取得し、内部のtrを配列で取得
   contents = find('#searchResultList > tbody').all('tr')
