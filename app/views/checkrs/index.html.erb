@@ -79,10 +79,10 @@
    <DIV>
      <% if @error.class == Capybara::ElementNotFound && @error.message.include?("#searchResultList > tbody")  %>
      <h3>
-     </h3>
        当てはまる物件も、類似物件もありませんでした
        <BR>
        (ブラウザの「戻る」ボタンで検索条件を確認してみてください）    
+     </h3>
      
      <% elsif @error.class == Capybara::ElementNotFound && @error.message.include?("Unable to find")  %>
      <h3>

@@ -48,7 +48,7 @@ class CheckrsController < ApplicationController
 
   end
   sleep 1
-   within(:xpath, '//*[@id="citySearchContent"]') do
+   within(:xpath, '//*[@id="citySearchContent"]/div[4]') do
     p "1"
   find_link(params[:data][:shikugun].to_s).trigger('click')
      p "2"
