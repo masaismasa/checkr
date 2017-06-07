@@ -75,8 +75,27 @@ class CheckrsController < ApplicationController
   select('60件表示', :from => 'pnum')
   
   if params[:data][:rent_price].to_f >= 4 &&  params[:data][:rent_price].to_f < 30
-    lower_price = "#{params[:data][:rent_price].to_f.floor}万円以上"
-    upper_price = "#{params[:data][:rent_price].to_f.floor+1}万円以下"
+    p params[:data][:rent_price].to_f
+    p params[:data][:rent_price].to_f*2
+    lower_price = (BigDecimal((params[:data][:rent_price].to_f*2).to_s).floor(0).to_f)/2
+    p lower_price
+    if lower_price.to_s.include?(".0") 
+      lower_price = lower_price.to_i
+    end
+    lower_price = "#{lower_price}万円以上"
+    p lower_price
+    
+    upper_price = (BigDecimal((params[:data][:rent_price].to_f*2+0.5).to_s).round(0).to_f)/2
+    p upper_price
+    if upper_price.to_s.include?(".0") 
+      upper_price = upper_price.to_i
+    end
+    upper_price = "#{upper_price}万円以下"
+    p upper_price
+    
+    # upper_price = "#{(BigDecimal((params[:data][:rent_price].to_f*2).to_s).round(0).to_f)/2}万円以下"
+    # lower_price = "#{params[:data][:rent_price].to_f.floor}万円以上"
+    # upper_price = "#{params[:data][:rent_price].to_f.floor+1}万円以下"
     select(lower_price, :from => 'r1')
     select(upper_price, :from => 'r2')
   elsif params[:data][:rent_price].to_f < 4
@@ -190,7 +209,7 @@ class CheckrsController < ApplicationController
         room = Room.last
         
         room.shop = content.find('td.company').text.delete("配信元: ")
-      room.brand =  content.all('td.company span')[1][:class].split(" ")[1].gsub(/homesf|forrenf|mynavif|chintaf|jseef|athomef|adparkf|pitatf|apamanf|centurf|zigexn|/, "jseef" => "いい部屋ネット", "athomef" => "at home", "adparkf" => "adpark", "pitatf" => "ピタットハウス", "homesf" => "HOMES", "forrenf" => "SUUMO", "mynavif" => "マイナビ賃貸", "chintaf" => "CHINTAI", "apamanf" => "アパマンショップ", "centurf" => "センチュリー21", "zigexnf" => "smocca")
+      room.brand =  content.all('td.company span')[1][:class].split(" ")[1].gsub(/homesf|forrenf|mynavif|chintaf|jseef|athomef|adparkf|pitatf|apamanf|centurf|zigexnf|/, "jseef" => "いい部屋ネット", "athomef" => "at home", "adparkf" => "アドパーク", "pitatf" => "ピタットハウス", "homesf" => "HOMES", "forrenf" => "SUUMO", "mynavif" => "マイナビ賃貸", "chintaf" => "CHINTAI", "apamanf" => "アパマンショップ", "centurf" => "センチュリー21", "zigexnf" => "smocca")
         room.save
 
       end
