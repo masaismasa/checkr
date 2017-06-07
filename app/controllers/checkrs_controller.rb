@@ -190,7 +190,7 @@ class CheckrsController < ApplicationController
         room = Room.last
         
         room.shop = content.find('td.company').text.delete("配信元: ")
-      room.brand =  content.all('td.company span')[1][:class].split(" ")[1].gsub(/homesf|forrenf|mynavif|chintaf|jseef|athomef|adparkf|pitatf/, "jseef" => "いい部屋ネット", "athomef" => "at home", "adparkf" => "adpark", "pitatf" => "ピタットハウス", "homesf" => "HOMES", "forrenf" => "SUUMO", "mynavif" => "マイナビ賃貸", "chintaf" => "CHINTAI")
+      room.brand =  content.all('td.company span')[1][:class].split(" ")[1].gsub(/homesf|forrenf|mynavif|chintaf|jseef|athomef|adparkf|pitatf|apamanf|centurf|zigexn|/, "jseef" => "いい部屋ネット", "athomef" => "at home", "adparkf" => "adpark", "pitatf" => "ピタットハウス", "homesf" => "HOMES", "forrenf" => "SUUMO", "mynavif" => "マイナビ賃貸", "chintaf" => "CHINTAI", "apamanf" => "アパマンショップ", "centurf" => "センチュリー21", "zigexnf" => "smocca")
         room.save
 
       end
