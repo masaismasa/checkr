@@ -176,8 +176,10 @@ class CheckrsController < ApplicationController
       / / =~ content.find('td.buildDetail').text
       room.floor =  Regexp.last_match.pre_match
 
-      / / =~ content.find('td.buildDetail').text
-      room.age =  Regexp.last_match.post_match
+      p content.find('td.buildDetail').text
+      p content.find('td.buildDetail').text.split(" ",2) [1] 
+      room.age = content.find('td.buildDetail').text.split(" ",2) [1] 
+       
       
       room.save
     

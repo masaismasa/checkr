@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20170603072522) do
     t.string   "madori"
     t.decimal    "size",       precision: 5  , scale: 2
     t.string   "floor"
-    t.integer  "age"
+    t.string  "age"
     t.string   "brand"
     t.string   "shop"
     t.datetime "created_at",            null: false

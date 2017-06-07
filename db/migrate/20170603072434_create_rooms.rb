@@ -16,7 +16,7 @@ class CreateRooms < ActiveRecord::Migration[5.0]
       t.string :madori
       t.decimal :size
       t.string :floor
-      t.integer :age
+      t.string :age
       t.string :brand
       t.string :shop
       
